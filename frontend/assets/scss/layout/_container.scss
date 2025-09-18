@@ -1,0 +1,28 @@
+// Container component
+.container {
+  @include container;
+  
+  @include modifier('fluid') {
+    max-width: none;
+  }
+  
+  @include modifier('sm') {
+    max-width: $breakpoint-sm;
+  }
+  
+  @include modifier('md') {
+    max-width: $breakpoint-md;
+  }
+  
+  @include modifier('lg') {
+    max-width: $breakpoint-lg;
+  }
+  
+  @include modifier('xl') {
+    max-width: $breakpoint-xl;
+  }
+  
+  @include modifier('2xl') {
+    max-width: $breakpoint-2xl;
+  }
+}

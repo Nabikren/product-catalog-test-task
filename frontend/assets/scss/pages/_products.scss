@@ -1,0 +1,293 @@
+// Products page styles
+.products {
+  @include element('header') {
+    @include flex-between;
+    align-items: flex-start;
+    margin-bottom: $spacing-8;
+    gap: $spacing-4;
+    
+    @include mobile-only {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  }
+  
+  @include element('title') {
+    font-size: $font-size-3xl;
+    font-weight: $font-weight-bold;
+    color: $color-gray-900;
+    margin-bottom: $spacing-2;
+    
+    @include mobile-only {
+      font-size: $font-size-2xl;
+    }
+  }
+  
+  @include element('subtitle') {
+    color: $color-gray-600;
+    margin-bottom: $spacing-4;
+    
+    @include mobile-only {
+      margin-bottom: $spacing-6;
+    }
+  }
+  
+  @include element('actions') {
+    display: flex;
+    gap: $spacing-3;
+    flex-wrap: wrap;
+  }
+  
+  @include element('filters') {
+    background-color: $color-white;
+    border: 1px solid $color-gray-200;
+    border-radius: $border-radius-lg;
+    padding: $spacing-6;
+    margin-bottom: $spacing-8;
+  }
+  
+  @include element('filters-grid') {
+    display: grid;
+    gap: $spacing-4;
+    
+    @include tablet-up {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    @include desktop-up {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  
+  @include element('filters-actions') {
+    display: flex;
+    gap: $spacing-3;
+    justify-content: flex-end;
+    margin-top: $spacing-6;
+    
+    @include mobile-only {
+      justify-content: stretch;
+      
+      .btn {
+        flex: 1;
+      }
+    }
+  }
+  
+  @include element('toolbar') {
+    @include flex-between;
+    align-items: center;
+    margin-bottom: $spacing-6;
+    padding: $spacing-4;
+    background-color: $color-gray-50;
+    border-radius: $border-radius-md;
+    
+    @include mobile-only {
+      flex-direction: column;
+      gap: $spacing-3;
+      align-items: stretch;
+    }
+  }
+  
+  @include element('toolbar-left') {
+    display: flex;
+    align-items: center;
+    gap: $spacing-4;
+    
+    @include mobile-only {
+      justify-content: space-between;
+    }
+  }
+  
+  @include element('toolbar-right') {
+    display: flex;
+    align-items: center;
+    gap: $spacing-3;
+  }
+  
+  @include element('view-toggle') {
+    display: flex;
+    border: 1px solid $color-gray-300;
+    border-radius: $border-radius-md;
+    overflow: hidden;
+  }
+  
+  @include element('view-button') {
+    @include flex-center;
+    padding: $spacing-2 $spacing-3;
+    background-color: $color-white;
+    color: $color-gray-600;
+    border: none;
+    cursor: pointer;
+    transition: all $transition-base $transition-ease-in-out;
+    
+    &:hover {
+      background-color: $color-gray-50;
+    }
+    
+    @include modifier('active') {
+      background-color: $color-primary;
+      color: $color-white;
+    }
+  }
+  
+  @include element('sort-select') {
+    min-width: 200px;
+  }
+  
+  @include element('results-info') {
+    font-size: $font-size-sm;
+    color: $color-gray-600;
+  }
+  
+  @include element('grid') {
+    display: grid;
+    gap: $spacing-6;
+    
+    @include modifier('cards') {
+      @include tablet-up {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      @include desktop-up {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      
+      @include large-desktop-up {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+    
+    @include modifier('list') {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  @include element('pagination-container') {
+    @include flex-center;
+    margin-top: $spacing-12;
+  }
+  
+  @include element('loading') {
+    @include flex-center;
+    flex-direction: column;
+    padding: $spacing-20;
+    color: $color-gray-500;
+  }
+  
+  @include element('loading-text') {
+    margin-top: $spacing-4;
+    font-size: $font-size-lg;
+  }
+  
+  @include element('empty') {
+    @include flex-center;
+    flex-direction: column;
+    padding: $spacing-20;
+    text-align: center;
+  }
+  
+  @include element('empty-icon') {
+    font-size: $font-size-4xl;
+    color: $color-gray-300;
+    margin-bottom: $spacing-6;
+  }
+  
+  @include element('empty-title') {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-semibold;
+    color: $color-gray-700;
+    margin-bottom: $spacing-3;
+  }
+  
+  @include element('empty-description') {
+    color: $color-gray-500;
+    margin-bottom: $spacing-8;
+    max-width: 400px;
+  }
+}
+
+// Product list item (for list view)
+.product-list-item {
+  display: flex;
+  gap: $spacing-4;
+  padding: $spacing-4;
+  background-color: $color-white;
+  border: 1px solid $color-gray-200;
+  border-radius: $border-radius-lg;
+  transition: all $transition-base $transition-ease-in-out;
+  cursor: pointer;
+  
+  &:hover {
+    box-shadow: $shadow-md;
+    border-color: $color-gray-300;
+  }
+  
+  @include element('image') {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: $border-radius-md;
+    background-color: $color-gray-100;
+    flex-shrink: 0;
+  }
+  
+  @include element('content') {
+    flex: 1;
+    min-width: 0;
+  }
+  
+  @include element('header') {
+    @include flex-between;
+    align-items: flex-start;
+    margin-bottom: $spacing-2;
+    gap: $spacing-4;
+  }
+  
+  @include element('title') {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $color-gray-900;
+    margin-bottom: $spacing-1;
+    @include text-truncate;
+  }
+  
+  @include element('brand') {
+    font-size: $font-size-sm;
+    color: $color-gray-600;
+  }
+  
+  @include element('price') {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-bold;
+    color: $color-primary;
+    white-space: nowrap;
+  }
+  
+  @include element('description') {
+    font-size: $font-size-sm;
+    color: $color-gray-700;
+    @include text-line-clamp(2);
+    margin-bottom: $spacing-3;
+  }
+  
+  @include element('meta') {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $spacing-4;
+  }
+  
+  @include element('status') {
+    font-size: $font-size-xs;
+    padding: $spacing-1 $spacing-2;
+    border-radius: $border-radius-sm;
+    background-color: $color-gray-100;
+    color: $color-gray-600;
+  }
+  
+  @include element('actions') {
+    display: flex;
+    gap: $spacing-2;
+  }
+}

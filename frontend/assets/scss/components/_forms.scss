@@ -1,0 +1,284 @@
+// Form components
+.form {
+  @include element('group') {
+    margin-bottom: $spacing-4;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  
+  @include element('label') {
+    display: block;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    color: $color-gray-700;
+    margin-bottom: $spacing-2;
+    
+    @include modifier('required') {
+      &::after {
+        content: ' *';
+        color: $color-error;
+      }
+    }
+  }
+  
+  @include element('input') {
+    @include form-input;
+    
+    @include modifier('error') {
+      border-color: $color-error;
+      
+      &:focus {
+        border-color: $color-error;
+        box-shadow: 0 0 0 3px rgba($color-error, 0.1);
+      }
+    }
+    
+    @include modifier('success') {
+      border-color: $color-success;
+      
+      &:focus {
+        border-color: $color-success;
+        box-shadow: 0 0 0 3px rgba($color-success, 0.1);
+      }
+    }
+  }
+  
+  @include element('textarea') {
+    @extend .form__input;
+    min-height: 120px;
+    resize: vertical;
+  }
+  
+  @include element('select') {
+    @extend .form__input;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right $spacing-3 center;
+    background-repeat: no-repeat;
+    background-size: 16px 12px;
+    padding-right: $spacing-10;
+    appearance: none;
+  }
+  
+  @include element('help') {
+    font-size: $font-size-sm;
+    color: $color-gray-600;
+    margin-top: $spacing-1;
+  }
+  
+  @include element('error') {
+    font-size: $font-size-sm;
+    color: $color-error;
+    margin-top: $spacing-1;
+    display: flex;
+    align-items: center;
+    gap: $spacing-1;
+  }
+  
+  @include element('success') {
+    font-size: $font-size-sm;
+    color: $color-success;
+    margin-top: $spacing-1;
+    display: flex;
+    align-items: center;
+    gap: $spacing-1;
+  }
+}
+
+// File input
+.file-input {
+  position: relative;
+  display: inline-block;
+  
+  @include element('input') {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+    width: 1px;
+    height: 1px;
+  }
+  
+  @include element('label') {
+    @include button-base;
+    @include button-size($spacing-3, $spacing-4, $font-size-base);
+    @include button-variant($color-gray-100, $color-gray-700, $color-gray-200);
+    border: 2px dashed $color-gray-300;
+    cursor: pointer;
+    text-align: center;
+    transition: all $transition-base $transition-ease-in-out;
+    
+    &:hover {
+      border-color: $color-primary;
+      background-color: color-alpha($color-primary, 0.05);
+    }
+    
+    @include modifier('dragover') {
+      border-color: $color-primary;
+      background-color: color-alpha($color-primary, 0.1);
+    }
+  }
+  
+  @include element('text') {
+    display: block;
+    margin-bottom: $spacing-2;
+    color: $color-gray-600;
+  }
+  
+  @include element('button-text') {
+    color: $color-primary;
+    font-weight: $font-weight-medium;
+  }
+  
+  @include element('help') {
+    font-size: $font-size-sm;
+    color: $color-gray-500;
+    margin-top: $spacing-2;
+  }
+}
+
+// Checkbox and Radio
+.checkbox,
+.radio {
+  display: flex;
+  align-items: flex-start;
+  gap: $spacing-3;
+  
+  @include element('input') {
+    margin: 0;
+    width: 16px;
+    height: 16px;
+    border: 1px solid $color-gray-300;
+    background-color: $color-white;
+    transition: all $transition-base $transition-ease-in-out;
+    
+    &:checked {
+      background-color: $color-primary;
+      border-color: $color-primary;
+    }
+    
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba($color-primary, 0.1);
+    }
+  }
+  
+  @include element('label') {
+    font-size: $font-size-sm;
+    color: $color-gray-700;
+    cursor: pointer;
+    line-height: $line-height-normal;
+  }
+}
+
+.checkbox {
+  @include element('input') {
+    border-radius: $border-radius-sm;
+  }
+}
+
+.radio {
+  @include element('input') {
+    border-radius: $border-radius-full;
+  }
+}
+
+// Switch
+.switch {
+  display: flex;
+  align-items: center;
+  gap: $spacing-3;
+  
+  @include element('input') {
+    position: relative;
+    width: 44px;
+    height: 24px;
+    background-color: $color-gray-300;
+    border-radius: $border-radius-full;
+    border: none;
+    cursor: pointer;
+    transition: background-color $transition-base $transition-ease-in-out;
+    appearance: none;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 20px;
+      height: 20px;
+      background-color: $color-white;
+      border-radius: $border-radius-full;
+      transition: transform $transition-base $transition-ease-in-out;
+      box-shadow: $shadow-sm;
+    }
+    
+    &:checked {
+      background-color: $color-primary;
+      
+      &::before {
+        transform: translateX(20px);
+      }
+    }
+    
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba($color-primary, 0.1);
+    }
+    
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+  
+  @include element('label') {
+    font-size: $font-size-sm;
+    color: $color-gray-700;
+    cursor: pointer;
+  }
+}
+
+// Input group
+.input-group {
+  display: flex;
+  
+  @include element('addon') {
+    display: flex;
+    align-items: center;
+    padding: $spacing-3 $spacing-4;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    color: $color-gray-500;
+    background-color: $color-gray-50;
+    border: 1px solid $color-gray-300;
+    
+    @include modifier('left') {
+      border-right: none;
+      border-radius: $border-radius-md 0 0 $border-radius-md;
+    }
+    
+    @include modifier('right') {
+      border-left: none;
+      border-radius: 0 $border-radius-md $border-radius-md 0;
+    }
+  }
+  
+  .form__input {
+    @include modifier('left-addon') {
+      border-left: none;
+      border-radius: 0 $border-radius-md $border-radius-md 0;
+    }
+    
+    @include modifier('right-addon') {
+      border-right: none;
+      border-radius: $border-radius-md 0 0 $border-radius-md;
+    }
+    
+    @include modifier('both-addon') {
+      border-left: none;
+      border-right: none;
+      border-radius: 0;
+    }
+  }
+}

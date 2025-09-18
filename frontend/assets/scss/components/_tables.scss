@@ -1,0 +1,289 @@
+// Table component
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: $color-white;
+  border-radius: $border-radius-lg;
+  overflow: hidden;
+  box-shadow: $shadow-sm;
+  
+  @include element('container') {
+    overflow-x: auto;
+    border-radius: $border-radius-lg;
+    border: 1px solid $color-gray-200;
+  }
+  
+  @include element('header') {
+    background-color: $color-gray-50;
+  }
+  
+  @include element('row') {
+    border-bottom: 1px solid $color-gray-200;
+    transition: background-color $transition-base $transition-ease-in-out;
+    
+    &:last-child {
+      border-bottom: none;
+    }
+    
+    @include modifier('hover') {
+      &:hover {
+        background-color: $color-gray-50;
+      }
+    }
+    
+    @include modifier('selected') {
+      background-color: color-alpha($color-primary, 0.05);
+    }
+    
+    @include modifier('clickable') {
+      cursor: pointer;
+      
+      &:hover {
+        background-color: $color-gray-50;
+      }
+    }
+  }
+  
+  @include element('header-cell') {
+    padding: $spacing-4 $spacing-6;
+    text-align: left;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    color: $color-gray-700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+    
+    @include modifier('sortable') {
+      cursor: pointer;
+      user-select: none;
+      position: relative;
+      padding-right: $spacing-8;
+      
+      &:hover {
+        color: $color-gray-900;
+      }
+      
+      &::after {
+        content: '';
+        position: absolute;
+        right: $spacing-4;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 0;
+        height: 0;
+        border-left: 4px solid transparent;
+        border-right: 4px solid transparent;
+        border-bottom: 4px solid $color-gray-400;
+        opacity: 0.5;
+        transition: all $transition-base $transition-ease-in-out;
+      }
+      
+      @include modifier('asc') {
+        color: $color-primary;
+        
+        &::after {
+          border-bottom: 4px solid $color-primary;
+          border-top: none;
+          opacity: 1;
+        }
+      }
+      
+      @include modifier('desc') {
+        color: $color-primary;
+        
+        &::after {
+          border-top: 4px solid $color-primary;
+          border-bottom: none;
+          opacity: 1;
+        }
+      }
+    }
+    
+    @include modifier('center') {
+      text-align: center;
+    }
+    
+    @include modifier('right') {
+      text-align: right;
+    }
+  }
+  
+  @include element('cell') {
+    padding: $spacing-4 $spacing-6;
+    font-size: $font-size-sm;
+    color: $color-gray-700;
+    vertical-align: top;
+    
+    @include modifier('center') {
+      text-align: center;
+    }
+    
+    @include modifier('right') {
+      text-align: right;
+    }
+    
+    @include modifier('nowrap') {
+      white-space: nowrap;
+    }
+    
+    @include modifier('truncate') {
+      max-width: 200px;
+      @include text-truncate;
+    }
+    
+    @include modifier('numeric') {
+      font-family: $font-family-mono;
+      text-align: right;
+    }
+  }
+  
+  @include element('actions') {
+    display: flex;
+    gap: $spacing-2;
+    justify-content: flex-end;
+  }
+  
+  @include element('status') {
+    padding: $spacing-1 $spacing-2;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-medium;
+    border-radius: $border-radius-sm;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    
+    @include modifier('active') {
+      background-color: color-alpha($color-success, 0.1);
+      color: $color-success;
+    }
+    
+    @include modifier('inactive') {
+      background-color: color-alpha($color-gray-500, 0.1);
+      color: $color-gray-600;
+    }
+    
+    @include modifier('pending') {
+      background-color: color-alpha($color-warning, 0.1);
+      color: $color-warning;
+    }
+    
+    @include modifier('error') {
+      background-color: color-alpha($color-error, 0.1);
+      color: $color-error;
+    }
+  }
+  
+  // Table variants
+  @include modifier('striped') {
+    .table__row:nth-child(even) {
+      background-color: $color-gray-25;
+    }
+  }
+  
+  @include modifier('bordered') {
+    .table__cell,
+    .table__header-cell {
+      border-right: 1px solid $color-gray-200;
+      
+      &:last-child {
+        border-right: none;
+      }
+    }
+  }
+  
+  @include modifier('compact') {
+    .table__cell,
+    .table__header-cell {
+      padding: $spacing-2 $spacing-4;
+    }
+  }
+  
+  @include modifier('spacious') {
+    .table__cell,
+    .table__header-cell {
+      padding: $spacing-6 $spacing-8;
+    }
+  }
+}
+
+// Empty state
+.table-empty {
+  @include flex-center;
+  flex-direction: column;
+  padding: $spacing-12 $spacing-6;
+  color: $color-gray-500;
+  
+  @include element('icon') {
+    font-size: $font-size-4xl;
+    margin-bottom: $spacing-4;
+    opacity: 0.5;
+  }
+  
+  @include element('title') {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-medium;
+    color: $color-gray-700;
+    margin-bottom: $spacing-2;
+  }
+  
+  @include element('description') {
+    font-size: $font-size-sm;
+    color: $color-gray-500;
+    text-align: center;
+    max-width: 400px;
+    margin-bottom: $spacing-6;
+  }
+}
+
+// Pagination
+.pagination {
+  @include flex-center;
+  gap: $spacing-2;
+  margin-top: $spacing-6;
+  
+  @include element('item') {
+    @include flex-center;
+    min-width: 40px;
+    height: 40px;
+    padding: $spacing-2 $spacing-3;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    color: $color-gray-700;
+    background-color: $color-white;
+    border: 1px solid $color-gray-300;
+    border-radius: $border-radius-md;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all $transition-base $transition-ease-in-out;
+    
+    &:hover:not(.pagination__item--disabled) {
+      background-color: $color-gray-50;
+      border-color: $color-gray-400;
+    }
+    
+    @include modifier('active') {
+      background-color: $color-primary;
+      border-color: $color-primary;
+      color: $color-white;
+      
+      &:hover {
+        background-color: $color-primary-dark;
+        border-color: $color-primary-dark;
+      }
+    }
+    
+    @include modifier('disabled') {
+      opacity: 0.5;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+  }
+  
+  @include element('ellipsis') {
+    @include flex-center;
+    min-width: 40px;
+    height: 40px;
+    color: $color-gray-400;
+    cursor: default;
+  }
+}

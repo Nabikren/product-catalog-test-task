@@ -1,0 +1,26 @@
+// Convert px to rem
+@function rem($pixels, $context: 16) {
+  @return $pixels / $context * 1rem;
+}
+
+// Color functions
+@function color-mix($color1, $color2, $percentage: 50%) {
+  @return mix($color1, $color2, $percentage);
+}
+
+@function color-alpha($color, $alpha) {
+  @return rgba($color, $alpha);
+}
+
+// Spacing functions
+@function spacing($multiplier) {
+  @return $spacing-4 * $multiplier;
+}
+
+// Strip units
+@function strip-unit($number) {
+  @if type-of($number) == 'number' and not unitless($number) {
+    @return $number / ($number * 0 + 1);
+  }
+  @return $number;
+}

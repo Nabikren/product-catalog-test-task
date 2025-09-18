@@ -1,0 +1,244 @@
+// Card component
+.card {
+  @include card;
+  
+  @include element('header') {
+    @include card-padding($spacing-6);
+    border-bottom: 1px solid $color-gray-200;
+    
+    @include modifier('no-border') {
+      border-bottom: none;
+    }
+  }
+  
+  @include element('body') {
+    @include card-padding($spacing-6);
+  }
+  
+  @include element('footer') {
+    @include card-padding($spacing-6);
+    border-top: 1px solid $color-gray-200;
+    background-color: $color-gray-50;
+    
+    @include modifier('no-border') {
+      border-top: none;
+      background-color: transparent;
+    }
+  }
+  
+  @include element('title') {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $color-gray-900;
+    margin-bottom: $spacing-2;
+  }
+  
+  @include element('subtitle') {
+    font-size: $font-size-sm;
+    color: $color-gray-600;
+    margin-bottom: $spacing-4;
+  }
+  
+  @include element('content') {
+    color: $color-gray-700;
+    line-height: $line-height-relaxed;
+  }
+  
+  @include element('image') {
+    width: 100%;
+    height: auto;
+    border-radius: $border-radius-lg $border-radius-lg 0 0;
+    
+    @include modifier('full') {
+      border-radius: $border-radius-lg;
+    }
+  }
+  
+  // Card variants
+  @include modifier('hover') {
+    transition: all $transition-base $transition-ease-in-out;
+    cursor: pointer;
+    
+    &:hover {
+      box-shadow: $shadow-lg;
+      transform: translateY(-2px);
+    }
+  }
+  
+  @include modifier('bordered') {
+    border: 1px solid $color-gray-200;
+    box-shadow: none;
+    
+    &:hover {
+      border-color: $color-gray-300;
+    }
+  }
+  
+  @include modifier('flat') {
+    box-shadow: none;
+    background-color: transparent;
+  }
+  
+  @include modifier('primary') {
+    border-left: 4px solid $color-primary;
+  }
+  
+  @include modifier('success') {
+    border-left: 4px solid $color-success;
+  }
+  
+  @include modifier('warning') {
+    border-left: 4px solid $color-warning;
+  }
+  
+  @include modifier('error') {
+    border-left: 4px solid $color-error;
+  }
+  
+  // Card sizes
+  @include modifier('compact') {
+    .card__header,
+    .card__body,
+    .card__footer {
+      padding: $spacing-4;
+    }
+  }
+  
+  @include modifier('spacious') {
+    .card__header,
+    .card__body,
+    .card__footer {
+      padding: $spacing-8;
+    }
+  }
+}
+
+// Product card
+.product-card {
+  @extend .card;
+  @extend .card--hover;
+  
+  @include element('image-container') {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background-color: $color-gray-100;
+    border-radius: $border-radius-lg $border-radius-lg 0 0;
+  }
+  
+  @include element('image') {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform $transition-slow $transition-ease-in-out;
+  }
+  
+  @include element('badge') {
+    position: absolute;
+    top: $spacing-3;
+    right: $spacing-3;
+    padding: $spacing-1 $spacing-2;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-medium;
+    color: $color-white;
+    background-color: $color-primary;
+    border-radius: $border-radius-sm;
+  }
+  
+  @include element('content') {
+    padding: $spacing-4;
+  }
+  
+  @include element('title') {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $color-gray-900;
+    margin-bottom: $spacing-2;
+    @include text-line-clamp(2);
+  }
+  
+  @include element('brand') {
+    font-size: $font-size-sm;
+    color: $color-gray-600;
+    margin-bottom: $spacing-2;
+  }
+  
+  @include element('description') {
+    font-size: $font-size-sm;
+    color: $color-gray-700;
+    margin-bottom: $spacing-3;
+    @include text-line-clamp(3);
+  }
+  
+  @include element('meta') {
+    @include flex-between;
+    align-items: flex-end;
+  }
+  
+  @include element('price') {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-bold;
+    color: $color-primary;
+  }
+  
+  @include element('actions') {
+    display: flex;
+    gap: $spacing-2;
+  }
+  
+  &:hover {
+    .product-card__image {
+      transform: scale(1.05);
+    }
+  }
+}
+
+// Stats card
+.stats-card {
+  @extend .card;
+  
+  @include element('content') {
+    @include flex-between;
+    padding: $spacing-6;
+  }
+  
+  @include element('info') {
+    flex: 1;
+  }
+  
+  @include element('icon') {
+    @include flex-center;
+    width: 48px;
+    height: 48px;
+    border-radius: $border-radius-lg;
+    background-color: color-alpha($color-primary, 0.1);
+    color: $color-primary;
+    font-size: $font-size-2xl;
+  }
+  
+  @include element('title') {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    color: $color-gray-600;
+    margin-bottom: $spacing-1;
+  }
+  
+  @include element('value') {
+    font-size: $font-size-3xl;
+    font-weight: $font-weight-bold;
+    color: $color-gray-900;
+  }
+  
+  @include element('change') {
+    font-size: $font-size-sm;
+    margin-top: $spacing-1;
+    
+    @include modifier('positive') {
+      color: $color-success;
+    }
+    
+    @include modifier('negative') {
+      color: $color-error;
+    }
+  }
+}

@@ -1,0 +1,101 @@
+// Footer component
+.footer {
+  background-color: $color-gray-900;
+  color: $color-gray-300;
+  margin-top: auto;
+  
+  @include element('container') {
+    @include container;
+    padding-top: $spacing-12;
+    padding-bottom: $spacing-12;
+  }
+  
+  @include element('content') {
+    display: grid;
+    gap: $spacing-8;
+    
+    @include tablet-up {
+      grid-template-columns: repeat(2, 1fr);
+      gap: $spacing-12;
+    }
+    
+    @include desktop-up {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  
+  @include element('section') {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-4;
+  }
+  
+  @include element('title') {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $color-white;
+    margin-bottom: $spacing-2;
+  }
+  
+  @include element('text') {
+    color: $color-gray-400;
+    line-height: $line-height-relaxed;
+  }
+  
+  @include element('link') {
+    color: $color-gray-300;
+    text-decoration: none;
+    transition: color $transition-base $transition-ease-in-out;
+    
+    &:hover {
+      color: $color-white;
+      text-decoration: none;
+    }
+  }
+  
+  @include element('bottom') {
+    border-top: 1px solid $color-gray-800;
+    margin-top: $spacing-8;
+    padding-top: $spacing-6;
+    text-align: center;
+    
+    @include tablet-up {
+      @include flex-between;
+      text-align: left;
+    }
+  }
+  
+  @include element('copyright') {
+    color: $color-gray-400;
+    font-size: $font-size-sm;
+  }
+  
+  @include element('social') {
+    display: flex;
+    justify-content: center;
+    gap: $spacing-4;
+    margin-top: $spacing-4;
+    
+    @include tablet-up {
+      margin-top: 0;
+      justify-content: flex-end;
+    }
+  }
+  
+  @include element('social-link') {
+    @include flex-center;
+    width: 40px;
+    height: 40px;
+    border-radius: $border-radius-full;
+    background-color: $color-gray-800;
+    color: $color-gray-300;
+    text-decoration: none;
+    transition: all $transition-base $transition-ease-in-out;
+    
+    &:hover {
+      background-color: $color-primary;
+      color: $color-white;
+      text-decoration: none;
+    }
+  }
+}

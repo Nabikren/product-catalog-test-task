@@ -1,0 +1,135 @@
+// NuxtUI component overrides for light theme
+
+// CSS variables override for light theme
+:root {
+  --ui-bg: #{$color-white} !important;
+  --ui-bg-elevated: #{$color-white} !important;
+  --ui-text: #{$color-gray-900} !important;
+  --ui-border: #{$color-gray-300} !important;
+  color-scheme: light !important;
+}
+
+html[data-color-mode="dark"],
+html[class*="dark"],
+.dark {
+  --ui-bg: #{$color-white} !important;
+  --ui-bg-elevated: #{$color-white} !important;
+  --ui-text: #{$color-gray-900} !important;
+  --ui-border: #{$color-gray-300} !important;
+  color-scheme: light !important;
+}
+
+// Input overrides - more aggressive selectors
+input,
+select,
+textarea,
+.ui-input,
+.ui-input input,
+.ui-select,
+.ui-select select,
+.ui-textarea,
+.ui-textarea textarea,
+[role="combobox"],
+[role="textbox"],
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+input[type="number"] {
+  background-color: $color-white !important;
+  background: $color-white !important;
+  color: $color-gray-900 !important;
+  border-color: $color-gray-300 !important;
+  
+  &:focus,
+  &:focus-visible,
+  &:active {
+    background-color: $color-white !important;
+    background: $color-white !important;
+    color: $color-gray-900 !important;
+    border-color: $color-primary !important;
+  }
+  
+  &::placeholder {
+    color: $color-gray-400 !important;
+  }
+}
+
+// Select dropdown overrides
+.ui-select-menu,
+.ui-select-option {
+  background-color: $color-white !important;
+  color: $color-gray-900 !important;
+}
+
+.ui-select-option:hover {
+  background-color: $color-gray-50 !important;
+}
+
+// Form group overrides
+.ui-form-group label {
+  color: $color-gray-700 !important;
+}
+
+// Button overrides to ensure proper theming
+.btn-white,
+.ui-button.btn-white,
+button.btn-white {
+  background-color: $color-white !important;
+  color: $color-gray-900 !important;
+  border: 1px solid $color-gray-300 !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+  
+  &:hover {
+    background-color: $color-gray-50 !important;
+    color: $color-gray-900 !important;
+    border-color: $color-gray-400 !important;
+  }
+  
+  &:focus {
+    background-color: $color-white !important;
+    color: $color-gray-900 !important;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+  }
+}
+
+.ui-button,
+button,
+.btn {
+  // White button variant
+  &.ui-button-white,
+  &[color="white"],
+  &.btn--white {
+    background-color: $color-white !important;
+    color: $color-gray-900 !important;
+    border: 1px solid $color-gray-300 !important;
+    
+    &:hover {
+      background-color: $color-gray-50 !important;
+      color: $color-gray-900 !important;
+    }
+  }
+  
+  // Default button
+  &.ui-button-default {
+    background-color: $color-white !important;
+    color: $color-gray-900 !important;
+    border-color: $color-gray-300 !important;
+    
+    &:hover {
+      background-color: $color-gray-50 !important;
+    }
+  }
+  
+  // Outline button with white variant
+  &.ui-button-outline {
+    background-color: $color-white !important;
+    color: $color-primary !important;
+    border: 1px solid $color-primary !important;
+    
+    &:hover {
+      background-color: $color-primary !important;
+      color: $color-white !important;
+    }
+  }
+}

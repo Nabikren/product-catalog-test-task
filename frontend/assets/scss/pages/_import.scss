@@ -1,0 +1,264 @@
+// Import page styles
+.import {
+  @include element('header') {
+    text-align: center;
+    margin-bottom: $spacing-12;
+  }
+  
+  @include element('title') {
+    font-size: $font-size-3xl;
+    font-weight: $font-weight-bold;
+    color: $color-gray-900;
+    margin-bottom: $spacing-4;
+    
+    @include mobile-only {
+      font-size: $font-size-2xl;
+    }
+  }
+  
+  @include element('subtitle') {
+    font-size: $font-size-lg;
+    color: $color-gray-600;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  @include element('content') {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  @include element('methods') {
+    display: grid;
+    gap: $spacing-6;
+    margin-bottom: $spacing-12;
+    
+    @include tablet-up {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    @include desktop-up {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  
+  @include element('method') {
+    @include card;
+    padding: $spacing-6;
+    text-align: center;
+    cursor: pointer;
+    transition: all $transition-base $transition-ease-in-out;
+    border: 2px solid transparent;
+    
+    &:hover {
+      box-shadow: $shadow-lg;
+      transform: translateY(-2px);
+    }
+    
+    @include modifier('active') {
+      border-color: $color-primary;
+      box-shadow: $shadow-lg;
+    }
+  }
+  
+  @include element('method-icon') {
+    @include flex-center;
+    width: 64px;
+    height: 64px;
+    border-radius: $border-radius-xl;
+    background-color: color-alpha($color-primary, 0.1);
+    color: $color-primary;
+    font-size: $font-size-3xl;
+    margin: 0 auto $spacing-4;
+  }
+  
+  @include element('method-title') {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $color-gray-900;
+    margin-bottom: $spacing-2;
+  }
+  
+  @include element('method-description') {
+    font-size: $font-size-sm;
+    color: $color-gray-600;
+  }
+  
+  @include element('form') {
+    @include card;
+    padding: $spacing-8;
+    margin-bottom: $spacing-8;
+  }
+  
+  @include element('form-title') {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-semibold;
+    color: $color-gray-900;
+    margin-bottom: $spacing-6;
+    text-align: center;
+  }
+  
+  @include element('dropzone') {
+    border: 2px dashed $color-gray-300;
+    border-radius: $border-radius-lg;
+    padding: $spacing-12 $spacing-6;
+    text-align: center;
+    background-color: $color-gray-50;
+    transition: all $transition-base $transition-ease-in-out;
+    cursor: pointer;
+    
+    &:hover {
+      border-color: $color-primary;
+      background-color: color-alpha($color-primary, 0.05);
+    }
+    
+    @include modifier('dragover') {
+      border-color: $color-primary;
+      background-color: color-alpha($color-primary, 0.1);
+    }
+    
+    @include modifier('error') {
+      border-color: $color-error;
+      background-color: color-alpha($color-error, 0.05);
+    }
+  }
+  
+  @include element('dropzone-icon') {
+    font-size: $font-size-4xl;
+    color: $color-gray-400;
+    margin-bottom: $spacing-4;
+  }
+  
+  @include element('dropzone-text') {
+    font-size: $font-size-lg;
+    color: $color-gray-600;
+    margin-bottom: $spacing-2;
+  }
+  
+  @include element('dropzone-subtext') {
+    font-size: $font-size-sm;
+    color: $color-gray-500;
+  }
+  
+  @include element('progress') {
+    margin: $spacing-6 0;
+  }
+  
+  @include element('progress-text') {
+    @include flex-between;
+    font-size: $font-size-sm;
+    color: $color-gray-600;
+    margin-bottom: $spacing-2;
+  }
+  
+  @include element('results') {
+    @include card;
+    padding: $spacing-6;
+  }
+  
+  @include element('results-header') {
+    @include flex-between;
+    align-items: center;
+    margin-bottom: $spacing-6;
+  }
+  
+  @include element('results-title') {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-semibold;
+    color: $color-gray-900;
+  }
+  
+  @include element('results-summary') {
+    display: grid;
+    gap: $spacing-4;
+    margin-bottom: $spacing-6;
+    
+    @include tablet-up {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  
+  @include element('summary-item') {
+    text-align: center;
+    padding: $spacing-4;
+    background-color: $color-gray-50;
+    border-radius: $border-radius-md;
+  }
+  
+  @include element('summary-value') {
+    font-size: $font-size-2xl;
+    font-weight: $font-weight-bold;
+    color: $color-gray-900;
+    margin-bottom: $spacing-1;
+    
+    @include modifier('success') {
+      color: $color-success;
+    }
+    
+    @include modifier('error') {
+      color: $color-error;
+    }
+  }
+  
+  @include element('summary-label') {
+    font-size: $font-size-sm;
+    color: $color-gray-600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  @include element('errors') {
+    margin-top: $spacing-6;
+  }
+  
+  @include element('errors-title') {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $color-error;
+    margin-bottom: $spacing-4;
+    display: flex;
+    align-items: center;
+    gap: $spacing-2;
+  }
+  
+  @include element('error-item') {
+    padding: $spacing-4;
+    background-color: color-alpha($color-error, 0.05);
+    border: 1px solid color-alpha($color-error, 0.1);
+    border-radius: $border-radius-md;
+    margin-bottom: $spacing-3;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  
+  @include element('error-row') {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    color: $color-error;
+    margin-bottom: $spacing-2;
+  }
+  
+  @include element('error-messages') {
+    font-size: $font-size-sm;
+    color: $color-gray-700;
+  }
+  
+  @include element('error-data') {
+    font-size: $font-size-xs;
+    color: $color-gray-500;
+    font-family: $font-family-mono;
+    background-color: $color-gray-100;
+    padding: $spacing-2;
+    border-radius: $border-radius-sm;
+    margin-top: $spacing-2;
+    overflow-x: auto;
+  }
+  
+  @include element('actions') {
+    @include flex-center;
+    gap: $spacing-4;
+    margin-top: $spacing-8;
+  }
+}
