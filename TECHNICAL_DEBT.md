@@ -84,47 +84,70 @@ textarea,
 
 **Проблема:**
 ```javascript
-// backend/pages/api/products/[id].ts
-res.setHeader('Access-Control-Allow-Origin', '*');
+// backend/src/main.ts
+app.enableCors({
+  origin: ['http://localhost:3000', 'http://localhost:3001'],
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
+});
 ```
 
 **Почему это проблема:**
-- Позволяет запросы с любых доменов
-- Уязвимость для CSRF атак
-- Нарушение принципа least privilege
+- Хардкод доменов в коде
+- Отсутствие проверки в runtime
+- Недостаточная гибкость для разных окружений
 
 **Production решение:**
 ```javascript
-const allowedOrigins = [
-  'https://yourdomain.com',
-  'https://admin.yourdomain.com'
-];
-const origin = req.headers.origin;
-if (allowedOrigins.includes(origin)) {
-  res.setHeader('Access-Control-Allow-Origin', origin);
-}
+const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(',') || [];
+app.enableCors({
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+});
 ```
 
 ---
 
 ## ⚠️ Важные проблемы
 
-### 4. 📊 Отсутствие валидации данных
+### 4. 📊 Частичная валидация данных
 
-**Проблема:** API принимает данные без строгой валидации схемы.
+**Проблема:** NestJS использует `class-validator`, но валидация не везде применяется строго.
+
+**Текущее состояние:**
+```typescript
+// backend/src/products/dto/create-product.dto.ts
+export class CreateProductDto {
+  @IsString({ message: 'Название должно быть строкой' })
+  name: string;
+
+  @IsOptional()
+  @IsNumber({}, { message: 'Цена должна быть числом' })
+  price?: number;
+}
+```
 
 **Production решение:**
-```javascript
-import { z } from 'zod';
+```typescript
+// Более строгая валидация
+export class CreateProductDto {
+  @IsString()
+  @Length(1, 255, { message: 'Название должно быть от 1 до 255 символов' })
+  name: string;
 
-const ProductSchema = z.object({
-  name: z.string().min(1).max(255),
-  price: z.number().positive().optional(),
-  metadata: z.record(z.any()).optional()
-});
-
-// Валидация в API handler
-const validatedData = ProductSchema.parse(req.body);
+  @IsOptional()
+  @IsNumber({}, { message: 'Цена должна быть числом' })
+  @Min(0, { message: 'Цена не может быть отрицательной' })
+  @Max(999999, { message: 'Цена слишком большая' })
+  price?: number;
+}
 ```
 
 ### 5. 🏗️ Отсутствие централизованной обработки ошибок

@@ -29,11 +29,12 @@
 ## 🛠 Использованные технологии
 
 ### Backend
-- **NextJS 13** - React фреймворк с API routes
+- **NestJS** - Node.js фреймворк с модульной архитектурой
 - **TypeORM 0.3** - современная ORM с миграциями
 - **PostgreSQL** - надежная база данных
 - **TypeScript** - типизация (не strict mode)
-- **Ручная валидация** - валидация данных
+- **class-validator** - валидация данных с декораторами
+- **Swagger** - автоматическая документация API
 - **multer** - загрузка файлов
 - **xlsx** - парсинг Excel файлов
 - **CSV export** - работа с Google Sheets через CSV
@@ -56,15 +57,14 @@
 
 ```
 product-catalog/
-├── 📂 backend/              # NextJS API сервер
-│   ├── 📂 pages/api/        # API роуты
-│   │   ├── 📂 products/     # CRUD продуктов
-│   │   └── 📂 import/       # Импорт данных
+├── 📂 backend/              # NestJS API сервер
 │   ├── 📂 src/
 │   │   ├── 📂 entities/     # TypeORM сущности
-│   │   ├── 📂 services/     # Бизнес-логика
-│   │   ├── 📂 config/       # Конфигурация БД
-│   │   └── 📂 types/        # TypeScript типы
+│   │   ├── 📂 products/     # Модуль продуктов (controller, service, DTOs)
+│   │   ├── 📂 import/       # Модуль импорта (controller, service, DTOs)
+│   │   ├── 📂 database/     # Конфигурация БД
+│   │   ├── 📂 app.module.ts # Корневой модуль
+│   │   └── 📄 main.ts       # Точка входа
 │   └── 📄 package.json
 ├── 📂 frontend/             # Nuxt 3 приложение
 │   ├── 📂 pages/            # Страницы приложения
@@ -97,6 +97,7 @@ npm run dev
 ### Доступ
 - **Frontend:** http://localhost:3000
 - **Backend API:** http://localhost:3001/api
+- **Swagger документация:** http://localhost:3001/api/docs
 - **База данных:** localhost:5432
 
 ## 🎨 Особенности реализации
@@ -132,10 +133,10 @@ npm run dev
 GET    /api/products           # Список продуктов (фильтры, пагинация)
 GET    /api/products/:id       # Продукт по ID
 POST   /api/products           # Создать продукт  
-PUT    /api/products/:id       # Обновить продукт
+PATCH  /api/products/:id       # Обновить продукт (частично)
 DELETE /api/products/:id       # Удалить продукт
 GET    /api/products/filters   # Доступные фильтры
-POST   /api/import             # Импорт данных
+POST   /api/import             # Импорт данных (multipart/form-data)
 ```
 
 ## 🧪 Тестирование
@@ -217,14 +218,14 @@ POST   /api/import             # Импорт данных
 Проект полностью соответствует всем требованиям тестового задания и превосходит их:
 
 ### ✅ Обязательные требования
-- [x] Backend на NextJS + TypeORM + PostgreSQL
+- [x] Backend на NestJS + TypeORM + PostgreSQL
 - [x] Frontend на Nuxt 3 + TypeScript
 - [x] Импорт из Excel/CSV/Google Sheets
 - [x] CRUD API для продуктов
 - [x] Страница импорта
 - [x] Страница списка продуктов  
 - [x] Страница деталей продукта
-- [x] Использование NuxtUI/Vuetify
+- [x] Использование NuxtUI
 - [x] BEM + SCSS (вместо Tailwind)
 
 ### ⭐ Бонусные функции

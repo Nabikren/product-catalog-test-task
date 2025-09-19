@@ -7,21 +7,25 @@ import type {
   PaginatedResponse, 
   ImportResult, 
   ImportOptions,
-  FilterOptions,
-  ApiResponse 
+  FilterOptions
 } from '~/types';
 
 export const useApi = () => {
   const config = useRuntimeConfig();
-  const baseURL = config.public.apiBase;
+  const baseURL = config.public.apiBaseUrl;
 
   // Generic API call function
   const apiCall = async <T>(
     endpoint: string, 
     options: RequestInit = {}
   ): Promise<T> => {
+    const fullUrl = `${baseURL}${endpoint}`;
+    console.log('🌐 API Call:', options.method || 'GET', fullUrl);
+    console.log('🌐 Base URL:', baseURL);
+    console.log('🌐 Endpoint:', endpoint);
+    
     try {
-      const response = await fetch(`${baseURL}${endpoint}`, {
+      const response = await fetch(fullUrl, {
         headers: {
           'Content-Type': 'application/json',
           ...options.headers,
@@ -33,13 +37,10 @@ export const useApi = () => {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      const result: ApiResponse<T> = await response.json();
+      const result = await response.json();
       
-      if (!result.success) {
-        throw new Error(result.error || 'API call failed');
-      }
-
-      return result.data as T;
+      // NestJS API возвращает данные напрямую, без оборачивающего объекта success/data
+      return result as T;
     } catch (error) {
       console.error('API Error:', error);
       throw error;
@@ -83,7 +84,7 @@ export const useApi = () => {
     // Обновить продукт
     update: async (id: number, productData: UpdateProductDto): Promise<Product> => {
       return apiCall<Product>(`/products/${id}`, {
-        method: 'PUT',
+        method: 'PATCH',
         body: JSON.stringify(productData),
       });
     },
@@ -109,45 +110,83 @@ export const useApi = () => {
       formData.append('file', file);
       formData.append('type', 'file');
 
-      const response = await fetch(`${baseURL}/import`, {
+      const fullUrl = `${baseURL}/import`;
+      console.log('🌐 File Import API Call: POST', fullUrl);
+      console.log('🌐 File:', file.name, file.type, file.size);
+
+      const response = await fetch(fullUrl, {
         method: 'POST',
         body: formData,
       });
 
       if (!response.ok) {
+        const errorText = await response.text();
+        console.error('❌ File import failed:', response.status, errorText);
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      const result: ApiResponse<ImportResult> = await response.json();
+      const result = await response.json();
+      console.log('✅ File import result:', result);
       
-      if (!result.success) {
-        throw new Error(result.error || 'Import failed');
-      }
-
-      return result.data as ImportResult;
+      // NestJS API возвращает данные напрямую
+      return result as ImportResult;
     },
 
     // Импорт из Google Sheets
     fromGoogleSheets: async (spreadsheetId: string, range?: string): Promise<ImportResult> => {
-      return apiCall<ImportResult>('/import', {
+      const formData = new FormData();
+      formData.append('type', 'google_sheets');
+      formData.append('spreadsheetId', spreadsheetId);
+      if (range) {
+        formData.append('range', range);
+      }
+
+      const fullUrl = `${baseURL}/import`;
+      console.log('🌐 Google Sheets Import API Call: POST', fullUrl);
+      console.log('🌐 Spreadsheet ID:', spreadsheetId);
+
+      const response = await fetch(fullUrl, {
         method: 'POST',
-        body: JSON.stringify({
-          type: 'google_sheets',
-          spreadsheetId,
-          range: range || 'A:Z',
-        }),
+        body: formData,
       });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('❌ Google Sheets import failed:', response.status, errorText);
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      console.log('✅ Google Sheets import result:', result);
+      
+      return result as ImportResult;
     },
 
     // Импорт по URL (для будущего развития)
     fromUrl: async (url: string): Promise<ImportResult> => {
-      return apiCall<ImportResult>('/import', {
+      const formData = new FormData();
+      formData.append('type', 'url');
+      formData.append('url', url);
+
+      const fullUrl = `${baseURL}/import`;
+      console.log('🌐 URL Import API Call: POST', fullUrl);
+      console.log('🌐 URL:', url);
+
+      const response = await fetch(fullUrl, {
         method: 'POST',
-        body: JSON.stringify({
-          type: 'url',
-          url,
-        }),
+        body: formData,
       });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('❌ URL import failed:', response.status, errorText);
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      console.log('✅ URL import result:', result);
+      
+      return result as ImportResult;
     },
   };
 

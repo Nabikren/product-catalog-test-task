@@ -17,6 +17,7 @@ npm run dev
 ### 2. Доступ к приложению
 - **Frontend:** http://localhost:3000
 - **Backend API:** http://localhost:3001/api
+- **Swagger документация:** http://localhost:3001/api/docs
 - **База данных:** localhost:5432
 
 ## Тестовые сценарии
@@ -64,6 +65,15 @@ npm run dev
 
 **Ожидаемый результат:** Успешный импорт с валидацией
 
+### 🧪 Сценарий 5: Тестирование API через Swagger
+
+1. Откройте http://localhost:3001/api/docs
+2. Изучите доступные endpoints
+3. Протестируйте API прямо в браузере
+4. Проверьте валидацию данных
+
+**Ожидаемый результат:** Полнофункциональная документация API
+
 ## Тестовые данные
 
 ### Google Sheets
@@ -97,7 +107,7 @@ curl http://localhost:3001/api/products
 curl http://localhost:3001/api/products/1
 
 # Обновить продукт
-curl -X PUT http://localhost:3001/api/products/1 \
+curl -X PATCH http://localhost:3001/api/products/1 \
   -H "Content-Type: application/json" \
   -d '{"name":"Обновленный продукт","price":1500}'
 
@@ -110,8 +120,8 @@ curl http://localhost:3001/api/products/filters
 ```bash
 # Импорт из Google Sheets
 curl -X POST http://localhost:3001/api/import \
-  -H "Content-Type: application/json" \
-  -d '{"type":"google_sheets","spreadsheetId":"1JSxXiuWX9dJEeUKGYUY4EsQ5wJln7acNr7UEpA20Ys0"}'
+  -F "type=google_sheets" \
+  -F "spreadsheetId=1JSxXiuWX9dJEeUKGYUY4EsQ5wJln7acNr7UEpA20Ys0"
 ```
 
 ## Проверка функционала
@@ -134,12 +144,13 @@ curl -X POST http://localhost:3001/api/import \
 - [ ] Обработка ошибок
 
 ### ✅ Технические требования
-- [ ] NextJS для backend
+- [ ] NestJS для backend
 - [ ] Nuxt 3 для frontend
 - [ ] TypeORM + PostgreSQL
 - [ ] TypeScript
 - [ ] BEM + SCSS (вместо Tailwind)
 - [ ] NuxtUI для компонентов
+- [ ] Swagger документация API
 
 ## Возможные проблемы
 

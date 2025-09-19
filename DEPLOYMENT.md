@@ -28,18 +28,20 @@ npm run dev
 3. **Доступ к приложению:**
 - Frontend: http://localhost:3000
 - Backend API: http://localhost:3001/api
+- Swagger документация: http://localhost:3001/api/docs
 - База данных: localhost:5432
 
 ## Структура проекта
 
 ```
 product-catalog/
-├── backend/              # NextJS API
-│   ├── pages/api/       # API роуты
+├── backend/              # NestJS API
 │   ├── src/
 │   │   ├── entities/    # TypeORM сущности
-│   │   ├── services/    # Бизнес-логика
-│   │   └── config/      # Конфигурация
+│   │   ├── products/    # Модуль продуктов
+│   │   ├── import/      # Модуль импорта
+│   │   ├── database/    # Конфигурация БД
+│   │   └── main.ts      # Точка входа
 │   └── package.json
 ├── frontend/            # Nuxt 3 приложение
 │   ├── pages/          # Страницы
@@ -66,15 +68,14 @@ product-catalog/
 
 ## Переменные окружения
 
-### Backend (.env.local)
+### Backend (.env)
 ```env
-DATABASE_HOST=localhost
-DATABASE_PORT=5432
-DATABASE_USERNAME=postgres
-DATABASE_PASSWORD=postgres
-DATABASE_NAME=product_catalog
-NEXTAUTH_SECRET=your-secret-key
-NEXTAUTH_URL=http://localhost:3001
+DB_HOST=localhost
+DB_PORT=5432
+DB_USERNAME=postgres
+DB_PASSWORD=postgres
+DB_DATABASE=product_catalog
+PORT=3001
 ```
 
 ### Frontend
@@ -85,11 +86,12 @@ API_BASE_URL=http://localhost:3001/api
 ## Технологический стек
 
 ### Backend
-- **NextJS** - React фреймворк с API routes
+- **NestJS** - Node.js фреймворк с модульной архитектурой
 - **TypeORM** - ORM для работы с БД
 - **PostgreSQL** - основная база данных
 - **TypeScript** - типизация
 - **class-validator** - валидация данных
+- **Swagger** - автоматическая документация API
 
 ### Frontend
 - **Nuxt 3** - Vue.js фреймворк

@@ -303,7 +303,7 @@ const {
   error, 
   fetchProduct, 
   updateProduct 
-} = useProduct(productId.value);
+} = useProduct(productId);
 
 // State
 const isSaving = ref(false);
